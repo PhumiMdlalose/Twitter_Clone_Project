@@ -1,0 +1,191 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    display: flex;
+}
+.side-bar-menu{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    /* width: 330px; */
+    height: 100vh;
+}
+
+
+.middle-container{
+    
+    display: flex;
+    flex:2;
+}
+.right-container{
+    
+    flex:1;
+}
+.x-logo{
+     align-self: flex-start;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100px;
+    height: 30px;
+    /* border-radius: 50%; */
+    margin: 20px 10px 40px 60px;
+    padding-left: 40px;
+
+}
+
+.x-logo svg{
+    align-self: flex-start;
+    display: flex;
+    width: 50px;
+    /* height: auto;  */
+    border-radius: 50%;
+    /* display: flex;
+    align-items: flex-start;
+    justify-content: flex-start; */
+    /* These three properties only go on the parent container */
+    font-size: 1rem;
+    font-weight: bold;
+    fill: #fff;
+}
+
+.x-logo svg:hover{
+    border-radius: 50px;
+    background-color: #16181C;
+    cursor: pointer;
+}
+
+.menu-item:hover{
+    background-color: #16181C;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.menu span{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    flex-direction: row;
+    gap: 12px;
+    padding: 10px;
+    height:50px;
+}
+
+#Home{
+    font-weight: bold;
+}
+
+.menu .menu-item svg{
+    width: 2rem;
+    height: 2rem;
+}
+
+.menu span p{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 400px;
+    color: #fff;
+    margin-left: 25px;
+    margin-bottom: 5px;
+    
+}
+.menu span svg{
+    display: flex;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 1rem;
+    font-weight: bold;
+    fill: #fff;
+    
+}
+
+.post-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 50px;
+    background-color: white;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 30px;
+    border-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    padding: 30px;
+}
+
+.profile-section{
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    /* gap: 10px; */
+    padding: 10px;
+    /* height:60px; */
+    width: 300px;
+    margin-top: 100px;
+    background: transparent;
+    border: none;
+}
+
+.profile-section:hover{
+    background-color: #16181C;
+    border-radius: 50px;
+}
+
+.profile-section img{
+    display: flex;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 5px;
+    margin: 5px;
+}
+
+.profile-text{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 40px;
+}
+
+.profile-text span{
+    margin: 0;
+    padding: 10px;
+    line-height: 5px;
+    color: #fff;
+    /* row-gap: 5px; */
+}
+
+.three-dots{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: 30px;
+    flex: 0 0 30px;
+    margin-left: auto;
+}
+.three-dots svg{
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    fill: #fff;
+}
+
+
