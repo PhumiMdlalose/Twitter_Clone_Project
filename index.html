@@ -121,6 +121,33 @@
             <button>Post</button>
         </div>
     </div>
+    <section class="feature-panel" aria-labelledby="quick-settings-title">
+        <h2 id="quick-settings-title">Quick settings</h2>
+        <div class="theme-setting">
+            <div>
+                <strong>Light mode</strong>
+                <span>Switch between light and dark appearance</span>
+            </div>
+            <label class="switch">
+                <input id="theme-toggle" type="checkbox" role="switch" aria-label="Light mode">
+                <span class="switch-track" aria-hidden="true"></span>
+            </label>
+        </div>
+        <form class="schedule-form" id="schedule-form">
+            <h3>Schedule a post</h3>
+            <p>Choose a date and time for your post.</p>
+            <div class="schedule-fields">
+                <label for="schedule-date">Date
+                    <input id="schedule-date" name="date" type="date" required>
+                </label>
+                <label for="schedule-time">Time
+                    <input id="schedule-time" name="time" type="time" required>
+                </label>
+            </div>
+            <button type="submit">Save schedule</button>
+            <p class="schedule-status" id="schedule-status" role="status" aria-live="polite"></p>
+        </form>
+    </section>
     <p class="second-paragraph">Show 280 posts</p>
 
     <div class="tweets-container">
@@ -346,5 +373,87 @@
         <span>© 2026 X Corp.</span>
     </footer>
 </div>
+<script>
+    const themeToggle = document.querySelector("#theme-toggle");
+    const scheduleForm = document.querySelector("#schedule-form");
+    const scheduleDate = document.querySelector("#schedule-date");
+    const scheduleTime = document.querySelector("#schedule-time");
+    const scheduleStatus = document.querySelector("#schedule-status");
+
+    function setTheme(theme) {
+        document.body.classList.toggle("light-theme", theme === "light");
+        themeToggle.checked = theme === "light";
+        localStorage.setItem("twitter-clone-theme", theme);
+    }
+
+    const savedTheme = localStorage.getItem("twitter-clone-theme");
+    setTheme(savedTheme === "light" ? "light" : "dark");
+
+    themeToggle.addEventListener("change", () => {
+        setTheme(themeToggle.checked ? "light" : "dark");
+    });
+
+    function toLocalDateTimeValues(date) {
+        const pad = (value) => String(value).padStart(2, "0");
+        return {
+            date: `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`,
+            time: `${pad(date.getHours())}:${pad(date.getMinutes())}`
+        };
+    }
+
+    function updateTimeMinimum() {
+        const now = new Date();
+        const today = toLocalDateTimeValues(now).date;
+        scheduleTime.min = scheduleDate.value === today
+            ? toLocalDateTimeValues(now).time
+            : "";
+    }
+
+    const today = toLocalDateTimeValues(new Date()).date;
+    scheduleDate.min = today;
+    const nextHour = new Date();
+    nextHour.setHours(nextHour.getHours() + 1, 0, 0, 0);
+    const initialSchedule = toLocalDateTimeValues(nextHour);
+    scheduleDate.value = initialSchedule.date;
+    scheduleTime.value = initialSchedule.time;
+    updateTimeMinimum();
+
+    const savedSchedule = localStorage.getItem("twitter-clone-scheduled-at");
+    if (savedSchedule) {
+        const restoredSchedule = new Date(savedSchedule);
+        if (!Number.isNaN(restoredSchedule.getTime()) && restoredSchedule > new Date()) {
+            const restoredValues = toLocalDateTimeValues(restoredSchedule);
+            scheduleDate.value = restoredValues.date;
+            scheduleTime.value = restoredValues.time;
+            scheduleStatus.textContent = `Schedule saved for ${restoredSchedule.toLocaleString()}.`;
+            updateTimeMinimum();
+        }
+    }
+
+    scheduleDate.addEventListener("change", () => {
+        scheduleTime.setCustomValidity("");
+        scheduleStatus.textContent = "";
+        updateTimeMinimum();
+    });
+    scheduleTime.addEventListener("input", () => {
+        scheduleTime.setCustomValidity("");
+        scheduleStatus.textContent = "";
+    });
+
+    scheduleForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const scheduledAt = new Date(`${scheduleDate.value}T${scheduleTime.value}`);
+
+        if (scheduledAt <= new Date()) {
+            scheduleTime.setCustomValidity("Choose a time in the future.");
+            scheduleTime.reportValidity();
+            return;
+        }
+
+        scheduleTime.setCustomValidity("");
+        localStorage.setItem("twitter-clone-scheduled-at", scheduledAt.toISOString());
+        scheduleStatus.textContent = `Schedule saved for ${scheduledAt.toLocaleString()}.`;
+    });
+</script>
 </body>
 </html>
